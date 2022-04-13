@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    .tasticalc {
+        border-radius: 0%;
+        width: 100px;
+        height: 100px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid black;
+    }
+
+    #display {
+        height: 100px;
+        width: 500px;
+        border: 2px solid grey;
+    }
+</style>
+
+<body>
+    <!-- <div id="calcolatrice">
+        <div id="display">
+
+        </div>
+        <div>
+            <div id="tasti" style="display:flex;flex-wrap: wrap;width:500px;">
+
+            </div>
+        </div>
+
+    </div> -->
+
+
+    <!-- <div id="calcolatrice">
+        <form name="form">
+            <input class="area" name="monitor" value="" placeholder="0">
+            <input name="last" type="hidden" value="">
+            <input name="oper" type="hidden" value="">
+            <input name="res" type="hidden" value="">
+            <table id="calc">
+                <tr>
+                    <td><input type="button" value="C" onclick="del();"></td>
+                    <td><input type="button" value="/" onclick="ar('/');"></td>
+                    <td><input type="button" value="0" onclick="digit(0);"></td>
+                    <td><input type="button" value="=" onclick="result();"></td>
+                </tr>
+                <tr>
+                    <td><input type="button" value="7" onclick="digit(7);"></td>
+                    <td><input type="button" value="8" onclick="digit(8);"></td>
+                    <td><input type="button" value="9" onclick="digit(9);"></td>
+                    <td><input type="button" value="x" onclick="ar('*');"></td>
+                </tr>
+                <tr>
+                    <td><input type="button" value="4" onclick="digit(4);"></td>
+                    <td><input type="button" value="5" onclick="digit(5);"></td>
+                    <td><input type="button" value="6" onclick="digit(6);"></td>
+                    <td><input type="button" value="-" onclick="ar('-');"></td>
+                </tr>
+                <tr>
+                    <td><input type="button" value="1" onclick="digit(1);"></td>
+                    <td><input type="button" value="2" onclick="digit(2);"></td>
+                    <td><input type="button" value="3" onclick="digit(3);"></td>
+                    <td><input type="button" value="+" onclick="ar('+');"></td>
+                </tr>
+
+            </table>
+        </form>
+    </div> -->
+    <textarea id="text">DelftStack</textarea>
+    <br />
+    <input type="button" id="btn" value="Download" />
+    <script>
+        function download(filename, textInput) {
+
+            var element = document.createElement('a');
+            element.setAttribute('href', 'data:text/plain;charset=utf-8, ' + encodeURIComponent(textInput));
+            element.setAttribute('download', filename);
+            document.body.appendChild(element);
+            element.click();
+            //document.body.removeChild(element);
+        }
+        document.getElementById("btn")
+            .addEventListener("click", function () {
+                var text = document.getElementById("text").value;
+                var filename = "output.txt";
+                download(filename, text);
+            }, false);
+    </script>
+    <script src="script.js"></script>
+</body>
+
+</html>

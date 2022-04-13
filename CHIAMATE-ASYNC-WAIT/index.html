@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Document</title>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    li {
+        list-style: none;
+        text-decoration: none;
+    }
+
+    li a {
+        color: rgb(102, 102, 102);
+        text-decoration: none;
+    }
+
+    li a:hover {
+        color: red;
+
+
+
+    }
+
+    #link {
+        height: calc(100vh - 0px);
+        overflow: scroll;
+        width: auto;
+        padding: 10px;
+        border: 2px solid grey;
+    }
+
+    #parole {
+        height: calc(100vh - 0px);
+        overflow: scroll;
+        width: 170px;
+        padding: 10px;
+        border: 2px solid grey;
+    }
+
+    /* //scrollbar */
+    /* width */
+    ::-webkit-scrollbar {
+        width: 5px;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {}
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0);
+        border-radius: 10px;
+    }
+
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {}
+
+    .bordo-li {
+        border: 1px solid grey;
+    }
+
+    textarea {
+        width: 100%;
+    }
+
+    #btn {
+        width: 430px;
+        height: 40px;
+    }
+
+    #formattatore {
+        width: 600px;
+        border: 1px solid grey;
+        height: calc(100vh - 0px);
+        overflow: scroll;
+        position: relative;
+        padding: 10px;
+    }
+
+    #formattatore div input {
+        width: 15%;
+        height: 30px;
+    }
+
+    #form-attatore {
+        display: flex;
+        width: 600px;
+        align-items: center;
+        position: absolute;
+        top: 0;
+    }
+
+    #green-bg {
+        background-color: rgb(60, 206, 60);
+    }
+</style>
+
+<body>
+
+    <div style="display:flex;">
+        <ul id="link"></ul>
+        <ul id="parole">
+            <div id="numeil"
+                style="position:relative;width:100%;height:20px;top:0;left:0;right:0;background-color:red;"></div>
+        </ul>
+        <input type="button" id="" value="Formatta ->" style="padding:10px;" onclick="Formatta()" />
+        <div id="formattatore">
+            <div id="form-attatore">
+                <input type="button" value="Lista" onclick="Formatta()">
+                <input type="button" value="Riga e a capo" onclick="Formatta1()">
+                <input type="button" id="btn" value="Download" />
+                <input type="text" style="width:51%;" id="inputrice">
+            </div>
+        </div>
+
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.26.1/axios.min.js"
+        integrity="sha512-bPh3uwgU5qEMipS/VOmRqynnMXGGSRv+72H/N260MQeXZIK4PG48401Bsby9Nq5P5fz7hy5UGNmC/W1Z51h2GQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        const doc = document.querySelector('#link');
+        const par = document.querySelector('#parole');
+        let arrayparols = []
+        async function AxyCall() {
+            const poke1 = await axios.get('https://pokeapi.co/api/v2/pokemon/1');
+            const poke2 = await axios.get('https://pokeapi.co/api/v2/pokemon/2');
+            const poke3 = await axios.get('https://pokeapi.co/api/v2/pokemon/3');
+            let one = poke1.data.moves
+            let two = poke2.data.moves
+            let three = poke3.data.moves
+            resel(one, two, three)
+        }
+        AxyCall();
+        const mail = []
+
+        function resel(poke1, poke2, poke3) {
+            poke1.map((x) => {
+                mail.push(x.move.url)
+            })
+            poke2.map((y) => {
+                mail.push(y.move.url)
+            })
+            poke3.map((z) => {
+                mail.push(z.move.url)
+            })
+            createelement()
+        }
+
+        function createelement() {
+            let filteredArray = mail.filter((ele, pos) => mail.indexOf(ele) == pos);
+            filteredArray.sort().map((x) => {
+
+                const list = document.createElement('li')
+                const link = document.createElement('a')
+                link.setAttribute("target", "_blank");
+                link.setAttribute("href", x);
+                linkClicced(link)
+                link.innerHTML = x
+                list.appendChild(link)
+                doc.appendChild(list)
+            })
+
+        }
+
+
+
+
+
+        function linkClicced(el) {
+            el.addEventListener('mouseenter', async function () {
+                // console.log(el.href)
+                const pok = await axios.get(el.href);
+                const names = pok.data.names
+                stampaName(names)
+            });
+        }
+
+        if (arrayparols.lenght == 0) {
+            document.getElementById('text').disabled = true;
+
+        }
+
+
+
+        let grandeArray = []
+        function Formatta(fil) {
+            arrayparols.map((x, i) => {
+                let gai = document.getElementById('formattatore')
+
+                var index = arrayparols.findIndex((val) => { return val == fil })
+
+                let valoreIndex = index
+
+                let backgreen = arrayparols[valoreIndex]
+                const bgGreeeen = arrayparols.indexOf(backgreen)
+                // console.log(grandeArray[bgGreeeen])
+
+                gai.style.display = 'inline-block'
+                let fornp = document.createElement('p')
+                if (i == bgGreeeen) {
+                    fornp.style.background = "lightgreen"
+                }
+                fornp.id = 'ciao'
+                fornp.innerHTML = x
+                gai.appendChild(fornp)
+
+                grandeArray.push({ x, i })
+
+
+
+            })
+        }
+
+        function Formatta1() {
+
+            let gai = document.getElementById('formattatore')
+            gai.style.display = 'flex'
+            gai.style.flexWrap = 'wrap'
+
+        }
+
+
+
+
+
+        let inputdiRicerca = document.querySelector('#inputrice')
+        inputdiRicerca.addEventListener("keyup", function (e) {
+            let gai = document.querySelectorAll('#ciao')
+            var gai2 = Array.prototype.slice.call(gai);
+            gai2.map((x) => {
+
+                x.remove()
+            })
+            console.log(gai2)
+
+
+            let match = inputdiRicerca.value;
+            grandeArray.map((array) => {
+                if (array.x.includes(match)) {
+                    console.log(array.x.includes(match));
+                }
+            })
+            const filterwords = arrayparols.filter((parole, i) => parole.toLowerCase().includes(match));
+
+            filterwords.map((x, i) => {
+                Formatta(x)
+
+            })
+
+
+
+
+        })
+
+
+
+        function stampaName(names) {
+            names.map((x) => {
+                document.getElementById('numeil').innerHTML = 'N°elem : ' + arrayparols.length
+                const list1 = document.createElement('textarea')
+                list1.id = "text"
+                list1.value = x.name
+                list1.classList.add("bordo-li");
+                par.appendChild(list1)
+
+                arrayparols.push(x.name)
+            })
+
+
+
+        }
+
+        // dowload
+        function download(filename, textInput) {
+            var element = document.createElement('a');
+            element.setAttribute('href', 'data:text/plain;charset=utf-8, ' + encodeURIComponent(textInput));
+            element.setAttribute('download', filename);
+            document.body.appendChild(element);
+            element.click();
+
+        }
+        document.getElementById("btn")
+            .addEventListener("click", function () {
+
+                var filename = "output.txt";
+                download(filename, arrayparols);
+            }, false);
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <script>
+
+        function capitalize(string) {
+            let arrayparole = string.split(' ')
+            let arrat = []
+            arrayparole.map((x) => {
+                let maiuscola = x[0].toUpperCase() + x.slice(1)
+                arrat.push(maiuscola)
+
+            })
+            console.log(arrat.join(' '))
+
+
+        }
+        capitalize('siamo qua tutti venite please')
+
+
+
+
+
+        const hello = (arr) => {
+            const max = Math.max(...arr);
+            console.log(max)
+            const min = Math.min(...arr);
+            const sum = arr.reduce((sum, r) => sum + r);
+            console.log(sum)
+            const avg = sum / arr.length;
+            return avg;
+        }
+
+
+
+        const rewiew = [4.5, 6, 88, 35, 46, 9.8, 67, 99, 34]
+        const stats = hello(rewiew)
+        console.log(stats)
+
+    </script>
+</body>
+
+</html>

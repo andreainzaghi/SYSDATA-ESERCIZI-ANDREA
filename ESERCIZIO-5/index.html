@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.26.1/axios.min.js"
+        integrity="sha512-bPh3uwgU5qEMipS/VOmRqynnMXGGSRv+72H/N260MQeXZIK4PG48401Bsby9Nq5P5fz7hy5UGNmC/W1Z51h2GQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <title>Document</title>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+
+    #json {
+        display: flex;
+        flex-wrap: wrap;
+        width: 100%;
+
+        height: 500px;
+    }
+
+    .text-lg {
+        width: 24%;
+        border: 1px solid lightgrey;
+        border-radius: 5px;
+        height: 90%;
+        background-color: rgb(224, 244, 247);
+        padding: 10px;
+        margin: 0.5%;
+        text-decoration: none;
+        list-style: none;
+    }
+
+    p {
+        margin-bottom: 8px;
+    }
+
+    #map {
+        width: 100vw;
+        height: 250px;
+
+    }
+</style>
+
+<body>
+    <div style="display:flex;align-items:center;width:100%;height: 100px;justify-content: center;">
+        <label for="sex">Sesso:</label>
+
+        <select name="filter-sex" id="filter-sex">
+            <option value="male">Maschio</option>
+            <option value="female">Femmina</option>
+        </select>
+
+        <label for="eta">Eta':</label>
+
+        <select name="age-eta" id="age-eta">
+
+        </select>
+        <input id="inputSearch" type="text" value="" placeholder="Cerca per Nome , Cognome , Mail"
+            style="width:50%;border-radius:50px;height:50px;outline:none;border:none;border: 1px solid grey;padding:10px ">
+        <button onclick="ChiamataApi()">invio</button>
+    </div>
+    <!-- <div id='map' class='map'></div> -->
+    <div id="mappe-single-element"></div>
+    <div>
+        <ul id="json"></ul>
+    </div>
+    <script src='https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.18.0/maps/maps-web.min.js'></script>
+
+    <script>
+
+        let allData = [];
+        let filterPerson = []
+        const doc = document.querySelector('#json');
+
+        const input = document.querySelector('input')
+
+        input.addEventListener("keyup", function (e, name, cognome, email, img, lat, long) {
+
+            deleter()
+            let valore = e.target.value
+            if (valore !== '') {
+                let valore = e.target.value
+                if (valore.toLowerCase() !== '') {
+
+                    filterPerson = allData.filter((person) => person.name.toLowerCase().includes(valore) || person.cognome.toLowerCase().includes(valore) || person.email.toLowerCase().includes(valore));
+                    console.log(filterPerson)
+
+                    filterPerson.map((x) => {
+
+                        let n = x.name
+                        let c = x.cognome
+                        let i = x.email
+                        let imge = x.img
+
+                        createTable(n, c, i, imge);
+                        if (x.lat < 89.5 && x.lat > -89.5 && x.long < 89.5 && x.long > -89.5) {
+                            tomtom(x.lat, x.long)
+                            console.log('real')
+                        } else {
+                            x.lat = 18
+                            x.long = 44
+                            tomtom(x.lat, x.long)
+                            console.log('fake')
+                        }
+
+                    })
+
+                }
+
+            }
+
+        })
+
+        function tomtom(lat, long) {
+            // tomtom
+            let elMaps = document.querySelector('#mappe-single-element')
+            const mapsblock = document.createElement('div');
+            mapsblock.id = 'map'
+
+            elMaps.appendChild(mapsblock)
+            var PAESE = [lat, long]
+
+            var map = tt.map({
+                key: 'Mrdf0S8wmNrw9wein8Gy6a0aS2wgiNRF',
+                container: 'map',
+                center: PAESE,
+                zoom: 10
+
+            });
+            map.addControl(new tt.FullscreenControl());
+            map.addControl(new tt.NavigationControl());
+
+            // tomtom
+        }
+
+        function deleter() {
+            // maps
+            const singlemaps = document.querySelectorAll('#map')
+            var btsmaps = Array.prototype.slice.call(singlemaps);
+            btsmaps.map((xx) => {
+                xx.remove()
+                console.log(xx)
+            })
+            // elemento foto
+            const singleElement = document.querySelectorAll('.text-lg')
+            var btnsArr = Array.prototype.slice.call(singleElement);
+            btnsArr.map((x) => {
+                x.remove()
+            })
+
+
+
+        }
+
+        function createTable(name, cognome, email, img) {
+
+            const aBlock = document.createElement('p')
+
+            aBlock.classList.add('text-lg');
+            aBlock.innerHTML = 'E-mail : ' + email
+            doc.appendChild(aBlock)
+
+            // name
+            const aBlock1 = document.createElement('p');
+
+            aBlock1.innerHTML = 'Name : ' + name
+            aBlock.appendChild(aBlock1)
+
+            // cognome
+            const aBlock2 = document.createElement('p')
+
+            aBlock2.innerHTML = 'Cognome : ' + cognome
+            aBlock.appendChild(aBlock2)
+
+            // img
+            const aBlock3 = document.createElement('img')
+            const imag = aBlock3.src = img
+            aBlock3.style.width = '100%'
+            imag.innerHTML = img
+            aBlock.appendChild(aBlock3)
+        }
+
+        let inputAge = document.querySelector('#age-eta')
+
+        for (let i = 0; i < 100; i++) {
+            const optionage = document.createElement('option')
+            optionage.innerHTML = i
+
+            inputAge.appendChild(optionage)
+        }
+
+
+        function ChiamataApi() {
+            deleter()
+            fetch('https://randomuser.me/api/?results=500').then((response) => {
+                response.json().then((data) => {
+                    console.log(data.results)
+                    let inputchoose = document.querySelector('#filter-sex')
+                    let sessoinput = inputchoose.value
+                    let inputAgeeta = inputAge.value
+                    console.log(inputAgeeta)
+
+                    for (let i = 0; i < data.results.length; i++) {
+                        if (data.results[i].gender == sessoinput && data.results[i].dob.age == inputAgeeta) {
+                            const email = data.results[i].email
+                            const name = data.results[i].name.first
+                            const cognome = data.results[i].name.last
+                            const img = data.results[i].picture.large
+                            // TOMTOM
+                            const latitudec = data.results[i].location.coordinates.latitude
+
+                            const longitudec = data.results[i].location.coordinates.longitude
+                            allData.push({ name: name, cognome: cognome, email: email, img: img, lat: latitudec, long: longitudec });
+                            createTable(name, cognome, email, img)
+                        }
+
+                    }
+
+                })
+            })
+        }
+        // API
+
+    </script>
+</body>
+
+</html>
