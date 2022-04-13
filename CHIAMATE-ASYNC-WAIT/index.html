@@ -121,8 +121,17 @@
                 <input type="button" value="Riga e a capo" onclick="Formatta1()">
                 <input type="button" id="btn" value="Download" />
                 <input type="text" style="width:51%;" id="inputrice">
+                <div id="numeridielementi"></div>
             </div>
         </div>
+        <div>
+            <div id="color">
+                <input type="color" style="width:400px;height:10vh;">
+            </div>
+            <textarea name="" id="" style=" width:400px;height:90vh;" rows="">
+                scrivo qualsiasi cosa</textarea>
+        </div>
+
 
     </div>
 
@@ -130,6 +139,9 @@
         integrity="sha512-bPh3uwgU5qEMipS/VOmRqynnMXGGSRv+72H/N260MQeXZIK4PG48401Bsby9Nq5P5fz7hy5UGNmC/W1Z51h2GQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
+        // color
+
+        // ____________________________________________________________________________________________________
         const doc = document.querySelector('#link');
         const par = document.querySelector('#parole');
         let arrayparols = []
@@ -205,12 +217,13 @@
 
                 let backgreen = arrayparols[valoreIndex]
                 const bgGreeeen = arrayparols.indexOf(backgreen)
-                // console.log(grandeArray[bgGreeeen])
+                console.log(index)
 
                 gai.style.display = 'inline-block'
                 let fornp = document.createElement('p')
                 if (i == bgGreeeen) {
                     fornp.style.background = "lightgreen"
+                    console.log()
                 }
                 fornp.id = 'ciao'
                 fornp.innerHTML = x
