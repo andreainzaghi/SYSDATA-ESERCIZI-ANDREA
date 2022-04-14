@@ -11,19 +11,34 @@
     height: 100px;
     margin: 2px;
     padding: 4px;
-    border: 1px solid black;
+    border: 1px solid rgb(102, 102, 102);
+    cursor: move;
+
+}
+
+.immagini {
+    z-index: 3;
 }
 
 #div {
     width: 330px;
     overflow: scroll;
-    height: 100vh;
+    height: calc(100vh - 80px);
 }
 
 #div2 {
+    width: 10px;
+    height: 10px;
+    z-index: -1;
+    border: 1px solid rgba(207, 207, 207, 0.336);
+
+}
+
+#div-drop {
     width: calc(100vw - 350px);
     height: 100vh;
-    margin: 2px;
+    display: flex;
+    flex-wrap: wrap;
     padding: 4px;
-    border: 5px solid red;
+    border: 1px solid rgb(90, 90, 90);
 }

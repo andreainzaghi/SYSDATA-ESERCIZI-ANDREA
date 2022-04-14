@@ -1,29 +1,55 @@
 let arrayImmagini = []
+let positionX = 0;
+let positionY = 0;
 
 
 function allowDrop(ev) {
     ev.preventDefault();
+
+    // ev.target.style.border = "1px solid red";
 }
 
 function drag(ev) {
     ev.dataTransfer.setData("text", ev.target.id);
     const element = ev.target
-
-    getPosition(element)
-    console.log(element)
-
+    ChangeImpostazioni(element)
 }
 
 function drop(ev) {
     ev.preventDefault();
     var data = ev.dataTransfer.getData("text");
-    // ev.clientX = 480
+
     ev.target.appendChild(document.getElementById(data));
+
 }
 
-async function getUser() {
+
+
+let inputdiRicerca = document.querySelector('#input')
+
+function Ricerca() {
+    let match = inputdiRicerca.value;
+    console.log(match)
+    DeleteT();
+    getUser(match)
+}
+
+function DeleteT() {
+    const imgdel = document.querySelectorAll('#div1');
+
+    var btnsArr = Array.prototype.slice.call(imgdel);
+    console.log(btnsArr)
+    // arrayImmagini.map((x) => {
+    //     console.log(x)
+    //     x.remove()
+    // })
+
+}
+
+async function getUser(search) {
+
     try {
-        const response = await axios.get('https://pixabay.com/api/?key=26732894-7ab7a716c214b455a08379fe1&q=yellow+flowers&image_type=photo&per_page=40');
+        const response = await axios.get('https://pixabay.com/api/?key=26732894-7ab7a716c214b455a08379fe1&q=' + search + '&image_type=photo&per_page=40');
         const apiImage = (response.data.hits);
         apiImage.map((x) => {
             arrayImmagini.push(x.largeImageURL)
@@ -32,24 +58,40 @@ async function getUser() {
         console.error(error);
     }
     CreaImmagini();
+
+
 }
 getUser();
 
 
-
 const doc = document.querySelector('#div');
 const doc2 = document.querySelector('#div2');
-let arrayposition = []
+const docDrop = document.querySelector('#div-drop');
 function CreaImmagini() {
     arrayImmagini.map((x, i) => {
 
         const image = document.createElement('div')
-        image.innerHTML = '<div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)">' + '<img src=' + x + ' alt="" draggable="true" ondragstart="drag(event)" id="drag1[' + i + ']">' + '</div>'
+        image.innerHTML = '<div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)">' + '<img src=' + x + ' alt="" draggable="true" ondragstart="drag(event)" id="drag1[' + i + ']" class="immagini" onclick="ChangeImpostazioni(elem)">' + '</div>'
         doc.appendChild(image)
 
     })
 }
 
+function ChangeImpostazioni(elem) {
+    let img = elem
+    // img.style.width = '200px'
+}
+
+
+
+function Drop() {
+    for (let i = 0; i < 4400; i++) {
+        const image1 = document.createElement('div')
+        image1.innerHTML = '<div id="div2" ondrop="drop(event)" ondragover="allowDrop(event)"></div>'
+        docDrop.appendChild(image1)
+    }
+}
+Drop();
 (function () {
     document.onmousemove = handleMouseMove;
     function handleMouseMove(event) {
@@ -75,23 +117,16 @@ function CreaImmagini() {
         }
         let x = event.pageX
         let y = event.pageY
-        arrayposition.push({ x, y })
+
+        // console.log(x, y)
+        positionX = x
+        positionY = y
 
 
     }
 })();
 
-// getPosition function
-function getPosition(elem) {
-
-    let lastItem = arrayposition[arrayposition.length - 1];
-    console.log(lastItem)
-    elem.style.position = "absolute";
-    elem.style.left = lastItem.x + 'px';
-    elem.style.top = lastItem.y + 'px';
 
 
 
 
-
-}

@@ -25,12 +25,20 @@
 </style>
 
 <body>
-    <div style="display:flex;">
-        <div id="div">
+    <div style="display:flex;" id="contenitore">
+        <div>
+            <input type="text" style="width:100%;height:40px;" placeholder="Cerca le immagini che preferisci!"
+                id="input">
+            <button onclick="Ricerca()" style="width:100%;height:40px;">Search </button>
+            <div id="div"></div>
 
         </div>
 
-        <div id="div2" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+        <div id="div-drop"></div>
+
+        <!-- <div id="div2" ondrop="drop(event)" ondragover="allowDrop(event)"></div> -->
+
+
 
     </div>
 
